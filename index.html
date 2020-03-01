@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
+                        <h5>$<span id="subtotal">1278</span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$<span id="total">1278</span></h5>
                      </div>
                   </div>
                </div>
@@ -77,61 +77,60 @@
          </div>
       </div>
    </section>
-</body>
-
-
 
 <script>
-     
    plusCart("plus-phone", "input-phone", "price-phone");
    plusCart("plus-case", "input-case", "price-case");
 
    minusCart("minus-phone", "input-phone", "price-phone");
    minusCart("minus-case", "input-case", "price-case");
 
-   
-
    // Plus Cart Button and Input Handler
-   function plusCart(btnName, idInput, devicePrice){  
-         const price = parseFloat(document.getElementById(devicePrice).innerText);
-         const btn = document.getElementById(btnName);
-         btn.addEventListener("click", function () {
-            const inputValue = document.getElementById(idInput).value++;
-            const finalPrice = parseFloat(document.getElementById(idInput).value);
-            return document.getElementById(devicePrice).innerText = finalPrice * price
-         })
-         
-         const inputChange = document.getElementById(idInput);
-         inputChange.addEventListener("input", function () {
-         document.getElementById(devicePrice).innerText = inputChange.value * price;
+   function plusCart(btnName, idInput, devicePrice) {
+      const price = parseFloat(document.getElementById(devicePrice).innerText);
+      const btn = document.getElementById(btnName);
+      btn.addEventListener("click", function plusItems() {
+         const inputValue = document.getElementById(idInput).value++;
+         const finalPrice = parseFloat(document.getElementById(idInput).value);
+         return document.getElementById(devicePrice).innerText = finalPrice * price, totalUpdate();
+
       })
 
-      }
-   
+      const inputChange = document.getElementById(idInput);
+      inputChange.addEventListener("input", function () {
+         document.getElementById(devicePrice).innerText = inputChange.value * price;
+         totalUpdate();
+      })
+
+   }
+
    // Minus Cart Button and Input Handler
    function minusCart(btnName, idInput, devicePrice) {
-         const price = parseFloat(document.getElementById(devicePrice).innerText);
-         const btn = document.getElementById(btnName);
-         btn.addEventListener("click", function () {
-            const inputValue = document.getElementById(idInput).value--;
-            const finalPrice = parseFloat(document.getElementById(idInput).value);
-            return document.getElementById(devicePrice).innerText = finalPrice * price
-         })
+      const price = parseFloat(document.getElementById(devicePrice).innerText);
+      const btn = document.getElementById(btnName);
+      btn.addEventListener("click", function () {
+         const inputValue = document.getElementById(idInput).value--;
+         const finalPrice = parseFloat(document.getElementById(idInput).value);
+         return document.getElementById(devicePrice).innerText = finalPrice * price, totalUpdate();
+      })
 
-         const inputChange = document.getElementById(idInput);
-         inputChange.addEventListener("input", function () {
-            document.getElementById(devicePrice).innerText = inputChange.value * price;
-         })
+      const inputChange = document.getElementById(idInput);
+      inputChange.addEventListener("input", function () {
+         document.getElementById(devicePrice).innerText = inputChange.value * price;
+         totalUpdate();
+      })
+   }
 
-      }
-
-   
-   
-      
-   
-   
-
-   
+   // Dynamic Subtotal and Total section.
+   function totalUpdate() {
+      const pricePhone = document.getElementById("price-phone").innerText;
+      const pricePhoneNumber = parseFloat(pricePhone);
+      const priceCase = document.getElementById("price-case").innerText;
+      const priceCaseNumber = parseFloat(priceCase);
+      const subtotal = pricePhoneNumber + priceCaseNumber;
+      document.getElementById("subtotal").innerText = subtotal;
+      document.getElementById("total").innerText = subtotal;
+   }
 </script>
-
+</body>
 </html>
